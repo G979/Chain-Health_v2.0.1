@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity 0.8.11;
 
 /*
  * @title Campaignfactory
@@ -8,9 +8,17 @@ pragma solidity >=0.7.0 <0.9.0;
  * @for more documentation and value check the slide representation
  */
  contract CampaignFactory {
+
     address[] public deployedCampaigns;
 
-    function createCampaign(uint minimum) public {
+    address ca = 0xCbF28faA0C8EBB69158275C852e7d074491C9437;
+
+    modifier restricted() {
+        require( msg.sender == ca);
+        _; 
+    }
+
+    function createCampaign(uint minimum) public restricted {
         address newCampaign = address(new Campaign(minimum, msg.sender));
         deployedCampaigns.push(newCampaign);
     }

@@ -10,7 +10,6 @@ class RequestIndex extends Component {
         const { address } = props.query;
         const campaign = Campaign(address);
         const requestCount = await campaign.methods.getRequestsCount().call();
-        console.log(requestCount);
 
         const requests = await Promise.all(
             Array(parseInt(requestCount))
@@ -19,7 +18,6 @@ class RequestIndex extends Component {
                 return campaign.methods.requests(index).call();
             })
         );
-        console.log(requests);
         return { address, requests, requestCount };
     }
 
